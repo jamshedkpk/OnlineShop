@@ -20,41 +20,22 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-header text-bold">{{ __('Super Admin') }}</li>
+                @if(Auth::guard('superadmin'))
                 <li class="nav-item">
-                    <a href=""
-                        class="nav-link  {{ request()->is('admin/dashboard') ? 'active' : '' }}">
+                    <a href="{{route('superadmin.dashboard')}}"
+                        class="nav-link  {{ request()->is('superadmin/dashboard') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-home"></i>
                         <p>{{ __('Dashboard') }}</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                        <a href="{{ route('users.index') }}"
-                            class="nav-link {{ request()->is('admin/users*') ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-users-cog"></i>
-                            <p>{{ __('Users') }}</p>
-                        </a>
-                    </li>
+                @endif
                     <li class="nav-item">
                         <a href="{{route('superadmins.admins.index')}}"
-                            class="nav-link {{ request()->is('admin/admins*') ? 'active' : '' }}">
+                            class="nav-link {{ request()->is('superadmin/superadmins/admins') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-users-cog"></i>
                             <p>{{ __('Admins') }}</p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                    <a href=""
-                        class="nav-link {{ request()->is('admin/categories*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-tags"></i>
-                        <p>{{ __('Categories') }}</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href=""
-                        class="nav-link {{ request()->is('admin/categories*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-th-list"></i>
-                        <p>{{ __('Products') }}</p>
-                    </a>
-                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
