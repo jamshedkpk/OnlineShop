@@ -1,18 +1,17 @@
 @extends('layouts.admin')
-
 @section('content')
     <!-- Content Header (Page header) -->
     <div class="content-header mb-4">
         <div class="row align-items-center">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">{{ __('Users') }}</h1>
+                <h1 class="m-0 text-dark">{{ __('Admins') }}</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item">
-                        <a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a>
+                        <a href="">{{ __('Dashboard') }}</a>
                     </li>
-                    <li class="breadcrumb-item active">{{ __('Users') }}</li>
+                    <li class="breadcrumb-item active">{{ __('Admins') }}</li>
                 </ol>
             </div>
         </div>
@@ -24,7 +23,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3 col-md-5 col-6 mb-2">
-                    <form action="{{ route('users.index') }}" method="GET" role="search">
+                    <form action="{{ route('superadmins.admins.index') }}" method="GET" role="search">
                         <div class="input-group">
                             <input type="text" name="term"
                                     placeholder="{{ __('Type name or email ...') }}" class="form-control"
@@ -38,11 +37,11 @@
                 </div>
                 <div class="col-lg-9 col-md-7 col-6">
                     <div class="card-tools text-md-right">
-                        <a class="btn btn-secondary" href="{{ route('users.pdf') }}">
+                        <a class="btn btn-secondary" href="{{ route('superadmins.admins.pdf') }}">
                             <i class="fas fa-download"></i> @lang('Export')
                         </a>
-                        <a href="{{ route('users.create') }}" class="btn btn-primary">
-                            {{ __('Add User') }} <i class="fas fa-plus-circle"></i>
+                        <a href="{{ route('superadmins.admins.create') }}" class="btn btn-primary">
+                            {{ __('Add admin') }} <i class="fas fa-plus-circle"></i>
                         </a>
                     </div>
                 </div>
@@ -64,38 +63,38 @@
                     </thead>
                     <tbody>
 
-                    @if ($users->total() > 0)
-                        @foreach ($users as $key => $user)
+                    @if ($admins->total() > 0)
+                        @foreach ($admins as $key => $admin)
                             <tr>
                                 <td>{{ ++$key }}</td>
                                 <td>
-                                    @if (!empty($user->profile_picture))
-                                        <img src="{{ $user->profilePic() }}" class="table-image-preview">
+                                    @if (!empty($admin->profile_picture))
+                                        <img src="{{ $admin->profilePic() }}" class="table-image-preview">
                                     @else
                                         <div class="no-preview"></div>
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('users.edit', $user->id) }}"> {{ $user->name }}</a>
+                                    <a href="{{ route('superadmins.admins.edit', $admin->id) }}"> {{ $admin->name }}</a>
                                 </td>
-                                <td>{{ $user->email }} </td>
+                                <td>{{ $admin->email }} </td>
                                 <td>
-                                    @if ($user->isAdmin())
-                                        <span class="badge badge-success"><i class="fas fa-user-secret"></i>
-                                                {{ __('Admin User') }}</span>
+                                    @if ($admin->isAdmin())
+                                        <span class="badge badge-success"><i class="fas fa-admin-secret"></i>
+                                                {{ __('Admin admin') }}</span>
                                     @else
-                                        <span class="badge badge-primary"><i class="fas fa-user-tie"></i>
-                                                {{ __('Genereal User') }}</span>
+                                        <span class="badge badge-primary"><i class="fas fa-admin-tie"></i>
+                                                {{ __('Genereal admin') }}</span>
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($user->isActive())
+                                    @if ($admin->isActive())
                                         <span class="badge badge-success">{{ __('Active') }}</span>
                                     @else
                                         <span class="badge badge-warning">{{ __('Inactive') }}</span>
                                     @endif
                                 </td>
-                                <td>{{ \Carbon\Carbon::parse($user->created_at)->format('d-M-Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($admin->created_at)->format('d-M-Y') }}</td>
                                 <td class="text-right">
                                     <div class="btn-group">
                                         <button type="button"
@@ -104,22 +103,22 @@
                                             <i class="fas fa-ellipsis-v"></i>
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            @if ($user->isActive())
-                                                <a href="{{ route('users.status', $user->id) }}"
+                                            @if ($admin->isActive())
+                                                <a href="{{ route('superadmins.admins.status', $admin->id) }}"
                                                     class="dropdown-item"><i class="fas fa-window-close"></i>
                                                     {{ __('Inactive') }}</a>
                                             @else
-                                                <a href="{{ route('users.status', $user->id) }}"
+                                                <a href="{{ route('superadmins.admins.status', $admin->id) }}"
                                                     class="dropdown-item"><i class="fas fa-check-square"></i>
                                                     {{ __('Active') }}</a>
                                             @endif
-                                            <a href="{{ route('users.edit', $user->id) }}"
+                                            <a href="{{ route('superadmins.admins.edit', $admin->id) }}"
                                                 class="dropdown-item"><i class="fas fa-edit"></i>
                                                 {{ __('Edit') }}</a>
-                                            @if ($user->id != auth()->user()->id)
-                                                <a href="{{ route('users.delete', $user->id) }}"
+
+                                                @if(Auth::guard('superadmin')->check()) <a href="{{ route('superadmins.admins.delete', $admin->id) }}"
                                                     class="dropdown-item delete-btn"
-                                                    data-msg="{{ __('Are you sure you want to delete this user?') }}"><i
+                                                    data-msg="{{ __('Are you sure you want to delete this admin?') }}"><i
                                                         class="fas fa-trash"></i> {{ __('Delete') }}</a>
                                             @endif
                                         </div>
@@ -132,9 +131,9 @@
                             <td colspan="10">
                                 <div class="data_empty">
                                     <img src="{{ asset('img/result-not-found.svg') }}" alt="" title="">
-                                    <p>{{ __('Sorry, no user found in the database. Create your very first user.') }}</p>
-                                    <a href="{{ route('users.create') }}" class="btn btn-primary">
-                                        {{ __('Add User') }} <i class="fas fa-plus-circle"></i>
+                                    <p>{{ __('Sorry, no admin found in the database. Create your very first admin.') }}</p>
+                                    <a href="{{ route('admins.create') }}" class="btn btn-primary">
+                                        {{ __('Add admin') }} <i class="fas fa-plus-circle"></i>
                                     </a>
                                 </div>
                             </td>
@@ -145,7 +144,7 @@
             </div>
 
             <!-- pagination start -->
-            {{ $users->links() }}
+            {{ $admins->links() }}
             <!-- pagination end -->
         </div>
     </div>

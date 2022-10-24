@@ -70529,20 +70529,8 @@ a.nav-link.toggle-icon {
 }
 
 .layout-navbar-fixed .wrapper .brand-link:not([class*=navbar]) {
-  background-color: #ffffff;
-  border-right: 1px solid #dee2e6;
-}
-
-.dark-mode  .layout-navbar-fixed .wrapper .brand-link:not([class*=navbar]),
-.layout-navbar-fixed .wrapper .control-sidebar-dark .brand-link:not([class*=navbar]),
-.dark-mode  .layout-navbar-fixed .wrapper .brand-link:not([class*=navbar]) {
-    background-color: #111827;
-    border-right: 1px solid #343a40;
-}
-
-.layout-navbar-fixed .wrapper .sidebar-dark-primary .brand-link:not([class*="navbar"]) {
-    background-color: #111827;
-    border-right: 1px solid #343a40;
+  background-color: #111827;
+  border-right: 1px solid #343a40;
 }
 
 .layout-fixed .main-sidebar {

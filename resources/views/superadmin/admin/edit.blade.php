@@ -5,17 +5,17 @@
     <div class="content-header mb-4">
         <div class="row align-items-center">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">{{ __('Edit User') }}</h1>
+                <h1 class="m-0 text-dark">{{ __('Edit Admin') }}</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item">
-                        <a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a>
+                        <a href="">{{ __('Dashboard') }}</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route('users.index') }}">{{ __('Usres') }}</a>
+                        <a href="{{ route('superadmins.admins.index') }}">{{ __('Usres') }}</a>
                     </li>
-                    <li class="breadcrumb-item active">{{ __('Edit User') }}</li>
+                    <li class="breadcrumb-item active">{{ __('Edit Admin') }}</li>
                 </ol>
             </div>
         </div>
@@ -26,23 +26,23 @@
     <div class="content">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">{{ __('Edit user') }}: {{ $user->name }}</h3>
+                <h3 class="card-title">{{ __('Edit admin') }}: {{ $admin->name }}</h3>
                 <div class="card-tools">
-                    <a href="{{ route('users.index') }}" class="btn btn-block btn-primary">
+                    <a href="{{ route('superadmins.admins.index') }}" class="btn btn-block btn-primary">
                         <i class="fas fa-long-arrow-alt-left"></i> {{ __('Go Back') }}
                     </a>
                 </div>
             </div>
             <!-- /.card-header -->
             <div class="card-body p-0">
-                <form class="form-horizontal" action="{{ route('users.update', $user->id) }}" method="post" enctype="multipart/form-data">
+                <form class="form-horizontal" action="{{ route('superadmins.admins.update', $admin->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 form-group">
-                                <label for="name" class="col-form-label">{{ __('User Name') }}<span class="required-field">*</span></label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="{{ __('User Name') }}" value="{{ $user->name }}" required>
+                                <label for="name" class="col-form-label">{{ __('admin Name') }}<span class="required-field">*</span></label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="{{ __('admin Name') }}" value="{{ $admin->name }}" required>
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -51,7 +51,7 @@
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="email" class="col-form-label">{{ __('Email Address') }}<span class="required-field">*</span></label>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="{{ __('Email Address') }}" value="{{ $user->email }}" readonly>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="{{ __('Email Address') }}" value="{{ $admin->email }}" readonly>
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -96,15 +96,15 @@
                             <div class="col-md-4 form-group">
                                 <label for="accountType" class="col-form-label">{{ __('Account Type') }}</label>
                                 <select class="form-control" id="accountType" name="accountType">
-                                    <option value="0" {{ $user->isAdmin() ? '' : 'selected' }}>{{ __('General User') }}</option>
-                                    <option value="1" {{ $user->isAdmin() ? 'selected' : '' }}>{{ __('Admin') }}</option>
+                                    <option value="0" {{ $admin->isAdmin() ? '' : 'selected' }}>{{ __('General admin') }}</option>
+                                    <option value="1" {{ $admin->isAdmin() ? 'selected' : '' }}>{{ __('Admin') }}</option>
                                 </select>
                             </div>
                             <div class="col-md-4 form-group">
                                 <label for="status" class="col-form-label">{{ __('Status') }}</label>
                                 <select class="form-control" id="status" name="status">
-                                    <option value="1" {{ $user->isActive() ? 'selected' : '' }}>{{ __('Active') }}</option>
-                                    <option value="0" {{ $user->isActive() ? '' : 'selected' }}>{{ __('Inactive') }}</option>
+                                    <option value="1" {{ $admin->isActive() ? 'selected' : '' }}>{{ __('Active') }}</option>
+                                    <option value="0" {{ $admin->isActive() ? '' : 'selected' }}>{{ __('Inactive') }}</option>
                                 </select>
                             </div>
                         </div>

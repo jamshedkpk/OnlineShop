@@ -13,7 +13,7 @@ use App\Http\Controllers\RetailerController;
 use App\Http\Controllers\ShopkeeperController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\SuperAdmin\AdminController as SuperAdmin_AdminController;
 // installer routes
 Route::group(['prefix' => 'install',  'middleware' => ['web', 'install', 'isVerified']], function () {
 Route::get('/', [InstallHelperController::class, 'getPurchaseCodeVerifyPage'])->name('verify');
@@ -49,6 +49,30 @@ Route::get('/dashboard',[SuperAdminController::class, 'dashboard'])->name('super
 Route::get('lang/change', [LanguageController::class, 'change'])->name('changeLang');
 Route::get('profile', [SuperAdminController::class,'profilePage'])->name('superadmin.profile');
 Route::put('profile/{email}',[SuperAdminController::class,'profileUpdate'])->name('superadmin.profile.update');
+// admin routes inside super admin
+Route::get('superadmins/admins',[SuperAdmin_AdminController::class,'index'])->name('superadmins.admins.index');
+Route::get('superadmins/admins/pdf',[SuperAdmin_AdminController::class,'createPDF'])->name('superadmins.admins.pdf');
+Route::get('superadmins/admins/create',[SuperAdmin_AdminController::class,'create'])->name('superadmins.admins.create');
+Route::get('superadmins/admins/edit/{id}',[SuperAdmin_AdminController::class,'edit'])->name('superadmins.admins.edit');
+Route::get('superadmins/admins/show/{id}',[SuperAdmin_AdminController::class,'show'])->name('superadmins.admins.show');
+Route::get('superadmins/admins/status/{id}',[SuperAdmin_AdminController::class,'changeStatus'])->name('superadmins.admins.status');
+Route::get('superadmins/admins/delete/{id}',[SuperAdmin_AdminController::class,'destroy'])->name('superadmins.admins.delete');
+Route::post('superadmins/admins/store',[SuperAdmin_AdminController::class,'store'])->name('superadmins.admins.store');
+Route::put('superadmins/admins/edit/{id}',[SuperAdmin_AdminController::class,'update'])->name('superadmins.admins.update');
+
+Route::get('/users/pdf', 'UserController@createPDF')->name('users.pdf');
+Route::resource('users', 'UserController', [
+'names' => [
+'index' => 'users.index',
+'create' => 'users.create',
+'store' => 'users.store',
+'show' => 'users.show',
+'edit' => 'users.edit',
+'update' => 'users.update',
+]
+]);
+Route::get('users/{slug}/staus', 'UserController@changeStatus')->name('users.status');
+Route::get('users/{id}/delete', 'UserController@destroy')->name('users.delete');
 
 
 Route::post('/logout',[SuperAdminController::class,'logout'])->name('superadmin.logout');

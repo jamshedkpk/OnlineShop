@@ -35,6 +35,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{route('superadmins.admins.index')}}"
+                            class="nav-link {{ request()->is('admin/admins*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-users-cog"></i>
+                            <p>{{ __('Admins') }}</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                     <a href=""
                         class="nav-link {{ request()->is('admin/categories*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tags"></i>
